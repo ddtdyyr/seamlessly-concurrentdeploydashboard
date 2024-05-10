@@ -1,17 +1,16 @@
-function allPathsSourceTarget(graph) {
-  const result = [];
-  const target = graph.length - 1;
-  dfs(graph, 0, [0]);
-  function dfs(graph, node, path) {
-    if (node === target) {
-      result.push([...path]);
-      return;
+function minDepth(root) {
+  if (!root) return 0;
+  const queue = [root];
+  let depth = 1;
+  while (queue.length) {
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      if (!node.left && !node.right) return depth;
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
     }
-    for (const neighbor of graph[node]) {
-      path.push(neighbor);
-      dfs(graph, neighbor, path);
-      path.pop();
-    }
+    depth++;
   }
-  return result;
+  return depth;
 }
